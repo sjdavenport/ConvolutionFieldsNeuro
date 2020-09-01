@@ -4,8 +4,7 @@ function spfn = getUKBspfn( RSfolder, do_gaussianize, mask )
 %--------------------------------------------------------------------------
 % ARGUMENTS
 % Mandatory
-%  RSfolderordata    either a string giving the name of the resting state 
-%                    set of data that is being worked with or a 
+%  RSfolder     the RSfolder you're working on/in
 % Optional
 %  do_gaussianize  0/1 whether or not to Gaussianize the data. Default is 1
 %                  i.e. to perform Gaussianization.
@@ -27,6 +26,11 @@ function spfn = getUKBspfn( RSfolder, do_gaussianize, mask )
 % 
 % % Load the spfn which generates subjects on their intersection masks
 % spfn = getUKBspfn( 'R2Block', 1, 'intersect' )
+% spec_subs = spfn([1,3,5]);
+% masks = loadUKB( [1,3,5], 'R2Block', 'mask', 'copemask', ones([91,109,91]))
+% mask = logical(prod((masks.field > 0.5),4));
+% [ bounds, bounded_mask ] = mask_bounds( mask );
+% isequal(spec_subs.mask, bounded_mask)
 %--------------------------------------------------------------------------
 % AUTHOR: Samuel Davenport
 %--------------------------------------------------------------------------
@@ -68,7 +72,7 @@ end
 % Function to draw a given subset with the intersection mask!
 function lat_data = get_sample_fields_nifti_intersect(subset2use, do_gaussianize, RSfolder)
     if length(subset2use) == 1
-        error('Not set up for random subject selection or nsubj = 1');
+        subset2use = {subset2use};
     end
     drawset = 'copemask';
     mask_fields = loadUKB( subset2use, RSfolder, 'mask', drawset, ones([91,109,91]));
