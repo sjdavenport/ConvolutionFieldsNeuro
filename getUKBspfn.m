@@ -19,10 +19,11 @@ function spfn = getUKBspfn( RSfolder, do_gaussianize, mask )
 % EXAMPLES
 % %% Resting State Data example
 % mask = imgload('MNImask');
-% spfn = getUKBspfn( 'RS_2Block', 1, mask );
+% spfn = getUKBspfn( 'R2Block', 1, mask );
 % random_subset = spfn(4)
 % subset = [1,3,5]; spec_subset = spfn(subset);
-% subs = loadUKB([1,3,5]);
+% subs = loadUKB([1,3,5], 'R2Block', 'cope', 'copemask');
+% isequal(spec_subset, subs);
 %--------------------------------------------------------------------------
 % AUTHOR: Samuel Davenport
 %--------------------------------------------------------------------------
@@ -54,7 +55,7 @@ function lat_data = get_sample_fields_nifti(subset2use, do_gaussianize, mask, RS
     if length(subset2use) == 1
         subset2use = {subset2use};
     end
-    drawset = 'cope';
+    drawset = 'copemask';
     lat_data = loadUKB( subset2use, RSfolder, 'cope', drawset, mask );
     if do_gaussianize
         lat_data = Gaussianize(lat_data);
@@ -70,8 +71,8 @@ function lat_data = get_sample_fields_nifti_intersect(subset2use, do_gaussianize
     mask_fields = loadUKB( subset2use, RSfolder, 'mask', drawset, ones([91,109,91]));
     
     % Obtain the intersection mask by taking the product of the individual
-    % subject masks
-    intersection_mask = prod(mask_fields.field,4);
+    % subject masks. (Note that because of warping we need to take > 0.5).
+    intersection_mask = prod((mask_fields.field > 0.5),4);
     
     % Obtain the lattice data (including bounding the mask
     lat_data = loadUKB( subset2use, RSfolder, 'cope', drawset, intersection_mask, RSfolder);
