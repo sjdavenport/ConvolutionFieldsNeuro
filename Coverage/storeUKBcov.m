@@ -31,6 +31,7 @@ function [maxnmin, LKCs, subsets, alphathresholds] = storeUKBcov( RSfolder, nsub
 %--------------------------------------------------------------------------
 % Set the number of dimensions
 D = 3;
+version = [true,true, false];
 
 %%  Add/check optional values
 %--------------------------------------------------------------------------
