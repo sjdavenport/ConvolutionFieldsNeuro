@@ -119,7 +119,7 @@ for I = 1:niters
     maxnmin.latminima(I) = minimum.lat;
     maxnmin.finelatminima(I) = minimum.finelat;
     maxnmin.convminima(I) = minimum.conv;
-    maxnmin.allminima(1:npeaks,I) = minimum.allmminima';
+    maxnmin.allminima(1:npeaks,I) = minimum.allminima';
     
     save(savefileloc, 'maxnmin', 'LKCs', 'subsets')
 end
