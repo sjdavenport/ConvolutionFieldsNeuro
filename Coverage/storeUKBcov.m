@@ -99,7 +99,7 @@ for I = 1:niters
     [ ~, threshold, maximum, L, minimum ] = vRFT(lat_data, params, npeaks, 1, version);
     LKCs.L(:,I) = L.L';
     LKCs.L0(I) = L.L0;
-    if any(isnan(L))
+    if any(isnan(L.L))
         warning('NAN LKC recorded')
     end
     
