@@ -97,18 +97,18 @@ for I = 1:niters
 
     lat_data = Mask(lat_data);
     [ ~, threshold, maximum, L, minimum ] = vRFT(lat_data, params, npeaks, 1, version);
-    LKCs.L(:,b) = L.L';
-    LKCs.L0(b) = L.L0;
+    LKCs.L(:,I) = L.L';
+    LKCs.L0(I) = L.L0;
     if any(isnan(L))
         warning('NAN LKC recorded')
     end
     
     % Record the maxima 
-    maxnmin.latmaxima(b) = maximum.lat;
-    maxnmin.finelatmaxima(b) = maximum.finelat;
-    maxnmin.convmaxima(b) = maximum.conv;
-    maxnmin.allmaxima(1:npeaks,b) = maximum.allmaxima';
-    maxnmin.alphathresholds(b) = threshold;
+    maxnmin.latmaxima(I) = maximum.lat;
+    maxnmin.finelatmaxima(I) = maximum.finelat;
+    maxnmin.convmaxima(I) = maximum.conv;
+    maxnmin.allmaxima(1:npeaks,I) = maximum.allmaxima';
+    maxnmin.alphathresholds(I) = threshold;
     
     % Error checking loop 
     if maximum.finelat > maximum.conv + 10^(-2)
@@ -116,10 +116,10 @@ for I = 1:niters
     end
     
     % Record the minima
-    maxnmin.latminima(b) = minimum.lat;
-    maxnmin.finelatminima(b) = minimum.finelat;
-    maxnmin.convminima(b) = minimum.conv;
-    maxnmin.allminima(1:npeaks,b) = minimum.allmminima';
+    maxnmin.latminima(I) = minimum.lat;
+    maxnmin.finelatminima(I) = minimum.finelat;
+    maxnmin.convminima(I) = minimum.conv;
+    maxnmin.allminima(1:npeaks,I) = minimum.allmminima';
     
     save(savefileloc, 'maxnmin', 'LKCs', 'subsets')
 end
