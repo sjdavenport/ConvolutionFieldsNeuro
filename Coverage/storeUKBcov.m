@@ -17,7 +17,7 @@ function [maxnmin, LKCs, subsets, alphathresholds] = storeUKBcov( RSfolder, nsub
 % 
 %--------------------------------------------------------------------------
 % EXAMPLES
-% RSfolder = 'R2Block'; nsubj = 10; FWHM = 3, resadd = 1; 
+% RSfolder = 'R2Block'; nsubj = 5; FWHM = 3, resadd = 1; 
 % params = ConvFieldParams([FWHM,FWHM,FWHM], resadd)
 % filename = ['FWHM', num2str(FWHM), '_nsubj', num2str(nsubj), '_resadd', num2str(resadd)];
 % global ncfloc; savedir = [ncfloc, 'R2Block_coverage/'];
