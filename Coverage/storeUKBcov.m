@@ -20,7 +20,7 @@ function [maxnmin, LKCs, subsets, alphathresholds] = storeUKBcov( RSfolder, nsub
 % RSfolder = 'R2Block'; nsubj = 5; FWHM = 3, resadd = 1; 
 % params = ConvFieldParams([FWHM,FWHM,FWHM], resadd)
 % filename = ['FWHM', num2str(FWHM), '_nsubj', num2str(nsubj), '_resadd', num2str(resadd)];
-% global ncfloc; savedir = [ncfloc, 'R2Block_coverage/'];
+% global ncfloc; savedir = [ncfloc, 'Coverage/R2Block_coverage/'];
 % savefileloc = [savedir, filename]; do_gauss = 1; niters = 1;
 % storeUKBcov( RSfolder, nsubj, params, savefileloc, do_gauss, niters )
 %--------------------------------------------------------------------------
@@ -121,11 +121,11 @@ for I = 1:niters
     maxnmin.convminima(I) = minimum.conv;
     maxnmin.allminima(1:npeaks,I) = minimum.allminima';
     
-    save(savefileloc, 'maxnmin', 'LKCs', 'subsets')
+    save(savefileloc, 'maxnmin', 'LKCs', 'subsets', 'params', 'do_gauss')
 end
 
 timing = toc;
-save(savefileloc, 'maxnmin', 'LKCs', 'subsets', 'timing')
+save(savefileloc, 'maxnmin', 'LKCs', 'subsets', 'params', 'do_gauss', 'timing')
 
 end
 
