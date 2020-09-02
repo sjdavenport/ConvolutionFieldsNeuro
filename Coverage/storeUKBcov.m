@@ -27,6 +27,11 @@ function [maxnmin, LKCs, subsets, alphathresholds] = storeUKBcov( RSfolder, nsub
 % AUTHOR: Samuel Davenport
 %--------------------------------------------------------------------------
 
+%%  Get important constants
+%--------------------------------------------------------------------------
+% Set the number of dimensions
+D = 3;
+
 %%  Add/check optional values
 %--------------------------------------------------------------------------
 % If subsets is not provided generate a random set!
@@ -50,7 +55,7 @@ if ~exist('do_gauss', 'var')
     do_gauss = 1;
 end
 
-%%  Main Function Loop
+%%  Initialize vectors
 %--------------------------------------------------------------------------
 % Initialize the maxnmin structure
 maxnmin = struct();
@@ -76,6 +81,8 @@ npeaks = 3;
 maxnmin.allmaxima = zeros( npeaks, niters );
 maxnmin.allminima = zeros( npeaks, niters );
 
+%%  Main Function Loop
+%--------------------------------------------------------------------------
 % Obtain the sample function that draws the data
 spfn = getUKBspfn( RSfolder, do_gauss, 'sample_intersect' );
 
