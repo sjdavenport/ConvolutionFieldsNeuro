@@ -10,7 +10,7 @@ coverage_types = {'finelat', 'lat', 'conv', 'cluster'};
 coverage = struct();
 coverage.FWHM_vec = FWHM_vec;
 
-gauss_set = {[0,1], 1, 1};
+gauss_set = {[0,1], [0,1], [0,1]};
 
 for I = 1:length(nsubj_vec)
     nsubj = nsubj_vec(I)

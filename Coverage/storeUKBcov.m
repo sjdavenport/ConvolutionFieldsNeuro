@@ -1,4 +1,4 @@
-function [maxnmin, LKCs, subsets, alphathresholds] = storeUKBcov( RSfolder, nsubj, params, savefileloc, do_gauss, subsets )
+function [maxnmin, LKCs, subsets, alphathresholds] = storeUKBcov( RSfolder, nsubj, params, savefileloc, do_gauss, subsets, mask )
 % storeUKBcov( RSfolder, nsubj, params, savefileloc, do_gauss, subsets )
 %--------------------------------------------------------------------------
 % ARGUMENTS
@@ -12,6 +12,9 @@ function [maxnmin, LKCs, subsets, alphathresholds] = storeUKBcov( RSfolder, nsub
 %  do_gauss     0/1 whether to Gaussianize or not. Default is 1: to
 %               Gaussianize
 %  subsets
+%  mask         a logical giving a mask of the data, if a mask is not 
+%               provided then the subject intersection mask for each set
+%               of subjects is used. 
 %--------------------------------------------------------------------------
 % OUTPUT
 % 
@@ -56,6 +59,10 @@ if ~exist('do_gauss', 'var')
     do_gauss = 1;
 end
 
+if ~exist('mask', 'var')
+    mask = 'sample_intersect';
+end
+
 %%  Initialize vectors
 %--------------------------------------------------------------------------
 % Initialize the maxnmin structure
@@ -85,7 +92,7 @@ maxnmin.allminima = zeros( npeaks, niters );
 %%  Main Function Loop
 %--------------------------------------------------------------------------
 % Obtain the sample function that draws the data
-spfn = getUKBspfn( RSfolder, do_gauss, 'sample_intersect' );
+spfn = getUKBspfn( RSfolder, do_gauss, mask );
 
 tic
 for I = 1:niters
@@ -121,11 +128,11 @@ for I = 1:niters
     maxnmin.convminima(I) = minimum.conv;
     maxnmin.allminima(1:npeaks,I) = minimum.allminima';
     
-    save(savefileloc, 'maxnmin', 'LKCs', 'subsets', 'params', 'do_gauss')
+    save(savefileloc, 'maxnmin', 'LKCs', 'params', 'do_gauss')
 end
 
 timing = toc;
-save(savefileloc, 'maxnmin', 'LKCs', 'subsets', 'params', 'do_gauss', 'timing')
+save(savefileloc, 'maxnmin', 'LKCs', 'params', 'do_gauss', 'timing')
 
 end
 

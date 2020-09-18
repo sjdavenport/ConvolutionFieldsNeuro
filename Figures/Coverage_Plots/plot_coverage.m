@@ -11,7 +11,7 @@ ggindices = {'NG', 'G'};
 
 coverage_types = {'finelat', 'lat', 'conv', 'cluster'};
 
-gauss_set = {[0,1], 1, 1};
+gauss_set = {[0,1], [0,1], [0,1]};
 
 load([ncfloc,'Figures/Coverage_plots/' RSfolder, '_coverage']);
 
