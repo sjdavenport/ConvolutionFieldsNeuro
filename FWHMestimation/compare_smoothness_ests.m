@@ -36,7 +36,8 @@ mask = logical( pad_vals( mask, pad) );
 lat_data = wnfield(mask, nsubj);
 
 resadd = 0;
-params = ConvFieldParams(FWHM, resadd);
+D = mask_dim(mask);
+params = ConvFieldParams(repmat(FWHM,1,D), resadd);
 params.lat_masked = false;
 cfield = convfield(lat_data, params);
 dcfield = convfield(lat_data, params, 1);
@@ -47,14 +48,19 @@ for d = 1:cfield.D
 end
 
 Lambda = Riemmetric_est( cfield, dcfield );
-conv_Lambda_est = mean(Lambda.field(subset_index{:}));
-conv.fwhm = mean(sqrt(4*log(2)./Lambda.field(subset_index{:})));
-conv.Lambda = conv_Lambda_est;
+Lambda_on_subset = Lambda.field(subset_index{:});
+conv.Lambda_unscaled = mean(Lambda_on_subset(:));
+conv.Lambda = ((nsubj-3)/(nsubj-2))*conv.Lambda_unscaled;
+conv.fwhm = sqrt(4*log(2)/conv.Lambda);
+conv.fwhm_unscaled = sqrt(4*log(2)/conv.Lambda_unscaled);
 
-[forman.fwhm, kiebel.fwhm] = est_smooth(cfield.field(subset_index{:}, :));
+[forman.fwhm, kiebel.fwhm,~,~,forman.fwhm_unscaled, kiebel.fwhm_unscaled] = est_smooth(cfield.field(subset_index{:}, :));
 
 kiebel.Lambda = 4*log(2)./kiebel.fwhm.^2;
 forman.Lambda = 4*log(2)./forman.fwhm.^2;
+
+kiebel.Lambda_unscaled = 4*log(2)./kiebel.fwhm_unscaled.^2;
+forman.Lambda_unscaled = 4*log(2)./forman.fwhm_unscaled.^2;
 
 end
 
