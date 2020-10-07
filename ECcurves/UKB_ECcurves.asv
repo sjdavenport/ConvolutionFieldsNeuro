@@ -82,8 +82,7 @@ for I = 1:length(nsubj_vec)
         tcfield = convfield_t(lat_data, params);
         curve = ECcurve( tcfield, limits, increm );
         store_curves(I,J,:) = curve;
-        save([ncfloc,'ECcurves/UKB_ECcurves/UKB_ECcurves_FWHM_', num2str(FWHM), ...
-            '_nsubj_', num2str(nsubj),'DG_', num2str(do_gauss)], 'store_curves', 'thresholds')
+        save([ncfloc,'ECcurves/UKB_ECcurves/UKB_ECcurves_FWHM_', num2str(FWHM), '_nsubj_', num2str(nsubj),_'DG], 'store_curves', 'thresholds')
     end
 end
 
