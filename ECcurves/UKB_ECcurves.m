@@ -43,7 +43,7 @@ end
 
 if ~exist('RSfolder', 'var')
     % default option of RSfolder
-    RSfolder = 'RS_2Block';
+    RSfolder = 'R2Block';
 end
 
 %%  Main Function Loop
