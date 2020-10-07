@@ -10,7 +10,7 @@ function [ out ] = UKB_SPM( FWHM, nsubj, do_gauss, RS_folder, mask, subsets )
 % 
 %--------------------------------------------------------------------------
 % EXAMPLES
-% 
+% UKB_SPM( 2, 10, 0, 'RS_2Block', 'intersection_mask', 1 )
 %--------------------------------------------------------------------------
 % AUTHOR: Samuel Davenport
 %--------------------------------------------------------------------------
@@ -20,10 +20,6 @@ function [ out ] = UKB_SPM( FWHM, nsubj, do_gauss, RS_folder, mask, subsets )
 
 %%  Add/check optional values
 %--------------------------------------------------------------------------
-if ~exist( 'opt1', 'var' )
-   % Default value
-   opt1 = 0;
-end
 
 % Calculate the random subsets of subjects to use!
 if iscell(subsets)
@@ -55,9 +51,9 @@ resadd = 0; params = ConvFieldParams([FWHM,FWHM,FWHM], resadd);
 
 fwhm_est_forman = cell(1, niters);
 fwhm_est_kiebel = cell(1, niters);
-L_forman = cell{1, niters};
+L_forman = cell(1, niters);
 L0_forman = zeros(1, niters);
-L_kiebel = cell{1, niters};
+L_kiebel = cell(1, niters);
 L0_kiebel = zeros(1, niters);
 for I = 1:niters
     lat_data = spfn(subsets{I});
