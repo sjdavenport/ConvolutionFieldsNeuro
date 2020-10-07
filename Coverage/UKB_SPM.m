@@ -10,7 +10,7 @@ function UKB_SPM( FWHM, nsubj, do_gauss, RS_folder, mask, subsets )
 % 
 %--------------------------------------------------------------------------
 % EXAMPLES
-% UKB_SPM( 2, 10, 0, 'RS_2Block', 'intersection_mask', 1 )
+% UKB_SPM( 2, 10, 0, 'R2Block', 'intersection_mask', 1 )
 %--------------------------------------------------------------------------
 % AUTHOR: Samuel Davenport
 %--------------------------------------------------------------------------
@@ -60,7 +60,7 @@ for I = 1:niters
     smooth_fields = convfield(lat_data, params);
     [ fwhm_est_forman{I}, fwhm_est_kiebel{I} ] = est_smooth(smooth_fields.field, smooth_fields.mask);
     [ L_forman{I}, L0_forman(I) ] = LKC_SPM_est( fwhm_est_forman{I}, mask );
-    [ L_forman{I}, L0_forman(I) ] = LKC_SPM_est( fwhm_est_kiebel{I}, mask );
+    [ L_kiebel{I}, L0_kiebel(I) ] = LKC_SPM_est( fwhm_est_kiebel{I}, mask );
     save([ncfloc, 'Coverage/Stationary_LKCs/FWHM_', num2str(FWHM),'_nsubj_', num2str(nsubj),'DG_', num2str(do_gauss)],...
          'L_forman', 'L0_forman', 'L_kiebel', 'L0_kiebel', 'fwhm_est_forman', 'fwhm_est_kiebel');
 end
