@@ -1,4 +1,4 @@
-function [ out ] = UKB_SPM( FWHM, nsubj, do_gauss, RS_folder, mask, subsets )
+function UKB_SPM( FWHM, nsubj, do_gauss, RS_folder, mask, subsets )
 % UKB_SPM( FWHM, nsubj, do_gauss, RS_folder, mask, subsets ) calculates the 
 % LKCs using SPM.
 %--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ else
     subsets = cell(1, niters);
     
     global jalaloc
-    load([jalaloc, 'feat_stuff/runfeat/', RSfolder, '/warped_subj_ids'], 'subj_ids');
+    load([jalaloc, 'feat_stuff/runfeat/', RS_folder, '/warped_subj_ids'], 'subj_ids');
     sids = intersect(subj_ids.cope, subj_ids.mask);
     total_nsubj = length(sids);
     
