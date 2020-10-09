@@ -93,7 +93,7 @@ else
     maxnmin.allmaxima = zeros( npeaks, niters );
     maxnmin.allminima = zeros( npeaks, niters );
     
-    start = 1;
+    start = 0;
 end
 
 %%  Main Function Loop
@@ -102,7 +102,7 @@ end
 spfn = getUKBspfn( RSfolder, do_gauss, mask );
 
 tic
-for I = start:niters
+for I = (start+1):niters
     %Display I if mod(I,10) = 0
     modul(I,10)
     
