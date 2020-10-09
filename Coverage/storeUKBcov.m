@@ -65,29 +65,36 @@ end
 
 %%  Initialize vectors
 %--------------------------------------------------------------------------
-% Initialize the maxnmin structure
-maxnmin = struct();
-
-% Initialize vectors to store the maxima
-maxnmin.latmaxima     = zeros( 1, niters );
-maxnmin.finelatmaxima = zeros( 1, niters );
-maxnmin.convmaxima    = zeros( 1, niters );
-
-% Initialize vectors to store the minima
-maxnmin.latminima     = zeros( 1, niters );
-maxnmin.finelatminima = zeros( 1, niters );
-maxnmin.convminima    = zeros( 1, niters );
-
-% Initialize matrices to store the alpha thresholds and the LKCs
-alphathresholds = zeros( 1, niters );
-LKCs = struct();
-LKCs.L = zeros(D, niters);
-LKCs.L0 = zeros(1, niters);
-
-% Initialize matrices to store all of the high maxima and low minima
-npeaks = 3;
-maxnmin.allmaxima = zeros( npeaks, niters );
-maxnmin.allminima = zeros( npeaks, niters );
+if exist(savefileloc, 'file')
+    load(savefileloc, 'LKCs', 'maxnmin', 'params', 'do_gauss');
+    start = length(maxnmin.alphathresholds);
+else
+    % Initialize the maxnmin structure
+    maxnmin = struct();
+    
+    % Initialize vectors to store the maxima
+    maxnmin.latmaxima     = zeros( 1, niters );
+    maxnmin.finelatmaxima = zeros( 1, niters );
+    maxnmin.convmaxima    = zeros( 1, niters );
+    
+    % Initialize vectors to store the minima
+    maxnmin.latminima     = zeros( 1, niters );
+    maxnmin.finelatminima = zeros( 1, niters );
+    maxnmin.convminima    = zeros( 1, niters );
+    
+    % Initialize matrices to store the alpha thresholds and the LKCs
+    alphathresholds = zeros( 1, niters );
+    LKCs = struct();
+    LKCs.L = zeros(D, niters);
+    LKCs.L0 = zeros(1, niters);
+    
+    % Initialize matrices to store all of the high maxima and low minima
+    npeaks = 3;
+    maxnmin.allmaxima = zeros( npeaks, niters );
+    maxnmin.allminima = zeros( npeaks, niters );
+    
+    start = 1;
+end
 
 %%  Main Function Loop
 %--------------------------------------------------------------------------
@@ -95,7 +102,7 @@ maxnmin.allminima = zeros( npeaks, niters );
 spfn = getUKBspfn( RSfolder, do_gauss, mask );
 
 tic
-for I = 1:niters
+for I = start:niters
     %Display I if mod(I,10) = 0
     modul(I,10)
     

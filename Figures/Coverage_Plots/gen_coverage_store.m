@@ -37,7 +37,7 @@ for I = 1:length(nsubj_vec)
                 storefilename = ['FWHM', num2str(FWHM), '_nsubj', num2str(nsubj), '_resadd1_NG'];
             end
             
-            load([ncfloc, 'Coverage/', RSfolder, '_coverage/', storefilename]);
+            load([ncfloc, 'Coverage/', RSfolder, '_coverage5000/', storefilename]);
             maxnmin.nsubj = nsubj;
             
             for do_2tail = [0,1]
@@ -64,4 +64,4 @@ for I = 1:length(nsubj_vec)
 end
 
 global ncfloc
-save([ncfloc,'Figures/Coverage_plots/R2Block_coverage'], 'coverage')
+save([ncfloc,'Figures/Coverage_plots/R2Block_coverage5000'], 'coverage')
