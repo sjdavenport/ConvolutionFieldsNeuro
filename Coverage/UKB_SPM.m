@@ -55,24 +55,24 @@ L_forman = cell(1, niters);
 L0_forman = zeros(1, niters);
 L_kiebel = cell(1, niters);
 L0_kiebel = zeros(1, niters);
-Lambda = cell(1,niters);
-L_stat = cell(1,niters);
-L0_stat = zeros(1, niters);
+% Lambda = cell(1,niters);
+% L_stat = cell(1,niters);
+% L0_stat = zeros(1, niters);
 
 for I = 1:niters
+    I
     lat_data = spfn(subsets{I});
     smooth_fields = convfield(lat_data, params);
     [ fwhm_est_forman{I}, fwhm_est_kiebel{I} ] = est_smooth(smooth_fields.field, smooth_fields.mask);
     [ L_forman{I}, L0_forman(I) ] = LKC_SPM_est( fwhm_est_forman{I}, mask );
     [ L_kiebel{I}, L0_kiebel(I) ] = LKC_SPM_est( fwhm_est_kiebel{I}, mask );
     
-    dfields = convfield(lat_data, params, 1);
-    [ L_stat{I}, L0_stat(I), Lambda{I} ] = LKC_stationary_est( smooth_fields, dfields, [true,true,false] );
+%     dfields = convfield(lat_data, params, 1);
+%     [ L_stat{I}, L0_stat(I), Lambda{I} ] = LKC_stationary_est( smooth_fields, dfields, [true,true,false] );
     
     save([ncfloc, 'Coverage/Stationary_LKCs/FWHM_', num2str(FWHM),'_nsubj_', num2str(nsubj),'DG_', num2str(do_gauss)],...
          'L_forman', 'L0_forman', 'L_kiebel', 'L0_kiebel', ...
-          'fwhm_est_forman', 'fwhm_est_kiebel', ...
-            'L_stat', 'L0_stat', 'Lambda');
+          'fwhm_est_forman', 'fwhm_est_kiebel');
 end
 
 end
