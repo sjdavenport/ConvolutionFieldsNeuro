@@ -76,7 +76,7 @@ for I = 1:length(nsubj_vec)
         subsets{J} = randsample(total_nsubj, nsubj, 0);
     end
     for J = 1:niters
-        lat_data = spfn(subsets{I});
+        lat_data = spfn(subsets{J});
         lat_data = Mask(lat_data);
         
         tcfield = convfield_t(lat_data, params);

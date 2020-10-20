@@ -12,6 +12,8 @@ coverage.FWHM_vec = FWHM_vec;
 
 gauss_set = {[0,1], [0,1], [0,1]};
 
+alpha = 0.01;
+
 for I = 1:length(nsubj_vec)
     nsubj = nsubj_vec(I)
     
@@ -48,7 +50,7 @@ for I = 1:length(nsubj_vec)
                 end
 
                 % Obtain the coverage
-                [voxcoverage, clustercoverage] = calc_coverage( maxnmin, LKCs, do_2tail);
+                [voxcoverage, clustercoverage] = calc_coverage( maxnmin, LKCs, do_2tail, alpha);
                 
                 % Record the voxel coverage
                 for K = 1:3
@@ -64,4 +66,4 @@ for I = 1:length(nsubj_vec)
 end
 
 global ncfloc
-save([ncfloc,'Figures/Coverage_plots/R2Block_coverage5000'], 'coverage')
+save([ncfloc,'Figures/Coverage_plots/R2Block_coverage5000_', num2str(100*alpha)], 'coverage')

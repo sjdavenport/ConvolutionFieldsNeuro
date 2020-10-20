@@ -130,7 +130,7 @@ for I = (start+1):niters
     end
     
     % Record the minima
-     maxnmin.finelatminima(I) = minimum.finelat;
+    maxnmin.finelatminima(I) = minimum.finelat;
     maxnmin.convminima(I) = minimum.conv;
     maxnmin.allminima(1:npeaks,I) = minimum.allminima';
     
