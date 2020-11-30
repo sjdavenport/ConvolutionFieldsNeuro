@@ -1,6 +1,6 @@
 global ncfloc %Load the parent directory
 
-set(0,'defaultAxesFontSize', 14); %This sets the default font size. 
+set(0,'defaultAxesFontSize', 15); %This sets the default font size. 
 
 RSfolder = 'R2Block';
 

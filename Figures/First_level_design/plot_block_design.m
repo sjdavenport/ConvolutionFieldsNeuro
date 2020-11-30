@@ -1,6 +1,4 @@
-set(0,'defaultAxesFontSize', 12); %This sets the default font size. 
-
-
+set(0,'defaultAxesFontSize', 15); %This sets the default font size. 
 x = 0:489;
 TR = 0.735;
 x = x*TR;

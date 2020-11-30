@@ -3,7 +3,7 @@ RSfolder = 'R2Block';
 nsubj_vec = [10,20,50];
 FWHM_vec = 2:5;
 
-set(0,'defaultAxesFontSize', 13); %This sets the default font size.
+set(0,'defaultAxesFontSize', 15); %This sets the default font size.
 
 for quantile = [0.01, 0.05]
     for do_gauss = [0,1]
@@ -23,12 +23,12 @@ for quantile = [0.01, 0.05]
                 L0 = mean(data.LKCs.L0, 2);
                 
                 % Obtain the stationary LKCs
-                load([ncfloc, 'Coverage/Stationary_LKCs/meanLKCs_DG_',num2str(do_gauss)], ...
+                load([ncfloc, 'Coverage/Stationary_LKCs_orig/meanLKCs_DG_',num2str(do_gauss)], ...
                     'LKCs_forman_mean', 'LKCs_forman_std', 'LKCs_kiebel_mean', 'LKCs_kiebel_std', ...
                     'LKCs_nonstat_mean', 'LKCs_nonstat_std')
                 
                 statlkcstore = load(['C:\Users\12SDa\davenpor\davenpor\Toolboxes\ConvolutionFieldsNeuro', ...
-                    '\Coverage\Stationary_LKCs\FWHM_', num2str(FWHM),'_nsubj_',num2str(nsubj), 'DG_', num2str(do_gauss),'.mat']);
+                    '\Coverage\Stationary_LKCs_orig\FWHM_', num2str(FWHM),'_nsubj_',num2str(nsubj), 'DG_', num2str(do_gauss),'.mat']);
                 
                 [ECmean, ECstd, x] = tailECcurve(data.maxnmin.allmaxima, quantile);
                 
@@ -52,8 +52,10 @@ for quantile = [0.01, 0.05]
                 xlim([min(x), max(x)]);
                 ylim([0, max(ECmean)]);
                 
-                legend(h([1,4:6]),'Empirical average EC curve', ...
-                    'EEC - Non Stationary', 'EEC - Forman', 'EEC - Kiebel')
+                if do_gauss && nsubj == 50
+                    legend(h([1,4:6]),'Empirical average EC curve', ...
+                        'EEC - Non Stationary', 'EEC - Forman', 'EEC - Kiebel')
+                end
                 if do_gauss == 1
                     title(['EC curves for the Gaussianized data: N = ', num2str(nsubj)]);
                 else

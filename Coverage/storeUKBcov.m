@@ -1,4 +1,4 @@
-function [maxnmin, LKCs, subsets, alphathresholds] = storeUKBcov( RSfolder, nsubj, params, savefileloc, do_gauss, subsets, mask )
+function [maxnmin, LKCs, subsets, alphathresholds] = storeUKBcov( RSfolder, nsubj, params, savefileloc, do_gauss, subsets, mask, simtype )
 % storeUKBcov( RSfolder, nsubj, params, savefileloc, do_gauss, subsets )
 %--------------------------------------------------------------------------
 % ARGUMENTS
@@ -63,6 +63,10 @@ if ~exist('mask', 'var')
     mask = 'sample_intersect';
 end
 
+if ~exist('simtype', 'var')
+    simtype = 1;
+end
+
 %%  Initialize vectors
 %--------------------------------------------------------------------------
 if exist(savefileloc, 'file')
@@ -99,7 +103,11 @@ end
 %%  Main Function Loop
 %--------------------------------------------------------------------------
 % Obtain the sample function that draws the data
-spfn = getUKBspfn( RSfolder, do_gauss, mask );
+if simtype == 0
+    spfn = getUKBspfn( RSfolder, do_gauss, mask );
+else
+    spfn = @(nsubj) gensims(nsubj, logical(mask), do_gauss, simtype);
+end
 
 tic
 for I = (start+1):niters
@@ -140,5 +148,20 @@ end
 timing = toc;
 save(savefileloc, 'maxnmin', 'LKCs', 'params', 'do_gauss', 'timing')
 
+end
+
+function out = gensims(nsubj, mask, do_gauss, simtype)
+    if simtype == 1
+        out = Mask(wfield( mask, nsubj ));
+    elseif simtype == 2
+        field_type = 'T';
+        field_params = 3;
+        out = Mask(wfield( mask, nsubj, field_type, field_params ));
+    else
+        error('This simtype is Not implemented')
+    end
+    if do_gauss == 1
+        out = Gaussianize(out);
+    end
 end
 
