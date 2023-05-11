@@ -59,6 +59,7 @@ FWHM = 3; resadd = 0; params = ConvFieldParams([FWHM, FWHM], resadd);
 
 niters = 1000;
 
+error('LOLOLOL WTF IS N??? IN line 73,74!, no wonder it didn''t work!')
 for nsubj = [20,50,100]
     rng(mod(FWHM,5) + nsubj)
     orig_pval_store = [];

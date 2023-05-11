@@ -133,3 +133,35 @@ for FWHM = 2:6
     xticks([]); yticks([]);
     export_fig([ncfloc, 'Figures/FWHM_plots/FWHM_', num2str(FWHM), '.pdf'], '-transparent')
 end
+
+%% (no non-scaling)
+global ncfloc
+set(0,'defaultAxesFontSize', 14); %This sets the default font size. 
+
+for nsubj = 50
+    load([ncfloc, 'FWHMestimation/Store_FWHM_estimates/threeDstatsims_Dim303030_nsubj', num2str(nsubj)]);
+    sim_names = {'Forman', 'Kiebel', 'SuRF'};
+    
+    %FWHM bias plot
+    clf
+    startat = 1.5; start_index = find(FWHM_vec == startat);
+    h(1) = plot(FWHM_vec(start_index:end), mean(forman.fwhm_ests(start_index:end,:),2) - FWHM_vec(start_index:end)');
+    hold on
+    h(2) = abline('h', 0);
+    h(3) = plot(FWHM_vec(start_index:end), mean(kiebel.fwhm_ests(start_index:end,:),2) - FWHM_vec(start_index:end)');
+    h(4) = plot(FWHM_vec(start_index:end), mean(conv.fwhm_ests(start_index:end,:),2) - FWHM_vec(start_index:end)');
+    ylabel('Bias'); xlabel('Applied FWHM per voxel');
+    xlim([startat,FWHM_vec(end)])
+    ylim([-0.15, 0.3])
+    title(['Comparing FWHM estimates, N = ', num2str(nsubj)])
+    
+%     h(5) = plot(FWHM_vec(start_index:end), mean(forman.fwhm_ests_unscaled(start_index:end,:),2) - FWHM_vec(start_index:end)', '--', 'color', def_col('blue') );
+%     h(6) = plot(FWHM_vec(start_index:end), mean(kiebel.fwhm_ests_unscaled(start_index:end,:),2) - FWHM_vec(start_index:end)', '--', 'color', def_col('red') );
+%     h(7) = plot(FWHM_vec(start_index:end), mean(conv.fwhm_ests_unscaled(start_index:end,:),2) - FWHM_vec(start_index:end)', '--', 'color', def_col('yellow') );
+%     
+    if nsubj == 50
+        legend(h([1,3,4]),sim_names{1}, sim_names{2}, sim_names{3}, 'Location', 'NE')
+    end
+    
+    export_fig([ncfloc, 'Figures/FWHM_plots/s_FWHM_3D_nsubj', num2str(nsubj), '.pdf'], '-transparent')
+end

@@ -5,11 +5,11 @@ mask2D = MNImask(:,:,slice);
 [ ~, mask2D ] = mask_bounds( mask2D );
 global ncfloc
 
-FWHM_vec = 5;
+FWHM_vec = 2;
 nsubj_vec = 30:30:150;
 resadd = 1; niters = 5000;
 
-do_gauss = 1;
+do_gauss = 0;
 
 for I = 1:length(nsubj_vec)
     for J = 1:length(FWHM_vec)
@@ -72,9 +72,17 @@ MNImask = imgload('MNImask');
 slice = 45;
 mask2D = MNImask(:,:,slice);
 [ ~, mask2D ] = mask_bounds( mask2D );
-spfn = @(nsubj) Gaussianize(Mask(wfield( mask2D, nsubj )), 3);
+params = ConvFieldParams([3,3], 0, 0);
+spfn = @(nsubj) Gaussianize(convfield(Mask(wfield( mask2D, nsubj )), params));
 
 spfn(20)
+
+%%
+resadd = 3;
+params = ConvFieldParams([3,3], resadd, 0);
+out = convfield(wfield( [50,50], nsubj ), params);
+est_smooth(out.field)
+% spfn(20)
 
 %%
 clf

@@ -103,16 +103,17 @@ end
 %%
 global ncfloc
 
-for FWHM = [2,4]
+for FWHM = [2,5]
     clf
     nsubj_vec = 10:10:150;
+%     nsubj_vec = [10:10:80,100:10:150];
     conv_FWER = zeros(2, length(nsubj_vec));
     fine_FWER = zeros(2, length(nsubj_vec));
     lat_FWER = zeros(2, length(nsubj_vec));
     
     for I = 1:length(nsubj_vec)
         nsubj = nsubj_vec(I);
-        for do_gauss = 1
+        for do_gauss = [0,1]
             load([ncfloc, '\Simulations\Gaussian_Sims\Coverage\Orig\FWHM_', num2str(FWHM)...
                 '_nsubj', num2str(nsubj),'_DG_', num2str(do_gauss),'.mat'])
             conv_FWER(do_gauss+1, I) = coverage.conv;
@@ -121,7 +122,7 @@ for FWHM = [2,4]
         end
     end
     
-    set(0,'defaultAxesFontSize', 14); %This sets the default font size.
+    set(0,'defaultAxesFontSize', 15); %This sets the default font size.
     
     alpha = 0.05; niters = 5000;
     h(1) = yline(alpha, '-', 'LineWidth', 1 );
@@ -129,19 +130,19 @@ for FWHM = [2,4]
     interval = bernstd( alpha, niters );
     h(2) = yline(interval(1), ':', 'LineWidth', 2 );
     h(3) = yline(interval(2), ':', 'LineWidth', 2 );
-%     h(4) = plot(nsubj_vec,conv_FWER(1,:));
+    h(4) = plot(nsubj_vec,conv_FWER(1,:));
     h(5) = plot(nsubj_vec,conv_FWER(2,:));
-%     h(6) = plot(nsubj_vec,lat_FWER(1,:), '--','color', def_col('blue'));
+    h(6) = plot(nsubj_vec,lat_FWER(1,:), '--','color', def_col('blue'));
     h(7) = plot(nsubj_vec,lat_FWER(2,:), '--','color', def_col('red'));
     
     xlabel('N: number of subjects')
     ylabel('FWER')
     xlim([10,150])
-%     if FWHM == 4
-%         legend(h(4:7), 'Original data - Convolution FWER',...
-%             'Gaussianized data - Convolution FWER', 'Original data - Lattice FWER', ...
-%             'Gaussianized data - Lattice FWER')
-%     end
+    if FWHM == 5
+        legend(h(4:7), 'Original data - Convolution FWER',...
+            'Gaussianized data - Convolution FWER', 'Original data - Lattice FWER', ...
+            'Gaussianized data - Lattice FWER', 'Location', 'SE')
+    end
     title(['FWER vs N for FWHM = ', num2str(FWHM)])
     ylim([0,0.09])
     yticks(0:0.01:0.09)

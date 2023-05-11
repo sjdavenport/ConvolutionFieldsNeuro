@@ -12,7 +12,7 @@ for I = 1:length(nsubj_vec)
     for J = 1:length(FWHM_vec)
         FWHM = FWHM_vec(J);
         nsubj = nsubj_vec(I);
-        params = ConvFieldParams( [FWHM], resadd );
+        params = ConvFieldParams(FWHM, resadd );
         rng(mod(FWHM,5) + nsubj)
         
         %         spfn = @(nsubj) wfield( mask2D, nsubj ); Old version, not masked!
