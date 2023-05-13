@@ -4,37 +4,23 @@ mask2D = MNImask(:,:,slice);
 [ ~, mask2D ] = mask_bounds( mask2D );
 global ncfloc
 
-field_type = 'T';  %Options are: 'T', 'L', 'S', 'S2', 'N' see wfield for details
+field_type = 'L';  %Options are: 'T', 'L', 'S', 'S2', 'N' see wfield for details
 field_params = 3; % Only relevant if field_type is 'T' or 'L'
 
-% FWHM = 2;
-% nsubj_vec = [30,40,70,90];
-FWHM_vec = 6;
-nsubj_vec = 100;
-resadd = 1; niters = 5000;
-
-for do_gauss = [0,1]
-    for I = 1:length(nsubj_vec)
-        for J = 1:length(FWHM_vec)
-            FWHM = FWHM_vec(J);
-            nsubj = nsubj_vec(I);
-            params = ConvFieldParams( [FWHM, FWHM], resadd );
-            rng(mod(FWHM,5) + nsubj)
-            
-            if do_gauss == 0
-                spfn = @(nsubj) wfield( mask2D, nsubj, field_type, field_params );
-            else
-                spfn = @(nsubj) Gaussianize(wfield( mask2D, nsubj, field_type, field_params ));
-            end
-            coverage = record_coverage( spfn, nsubj, params, niters);
-            
-            save([ncfloc, 'Simulations/Gaussianization_Sims/Coverage/FWHM_',...
-                num2str(FWHM), '_nsubj', num2str(nsubj), '_DG_', num2str(do_gauss)],'coverage')
-        end
-    end
+if strcmp(field_type, 'L')
+    foldername = 'Laplacian';
+elseif strcmp(field_type, 'L')
+    foldername = 'tfield';
 end
 
-% Need to mask!!
+do_gauss = 1;
+nsubj_vec = 20;
+FWHM_vec = 2;
+
+saveloc = [ncfloc, 'Simulations/Gaussianization_Sims/Coverage/', foldername];
+
+comp_gauss_coverage( field_type, field_params, mask2D, nsubj_vec, ...
+                                        FWHM_vec, do_gauss, saveloc)
 
 %% Test the masking
 MNImask = imgload('MNImask');
