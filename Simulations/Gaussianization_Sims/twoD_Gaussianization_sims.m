@@ -14,8 +14,8 @@ elseif strcmp(field_type, 'L')
 end
 
 do_gauss = 1;
-nsubj_vec = 20;
-FWHM_vec = 2;
+nsubj_vec = 10;
+FWHM_vec = 5;
 
 saveloc = [ncfloc, 'Simulations/Gaussianization_Sims/Coverage/', foldername];
 
@@ -34,7 +34,7 @@ spfn = @(nsubj) Gaussianize(wfield( mask2D, nsubj, field_type, field_params ));
 spfn(50)
 
 %% Gaussianize validity demonstration
-global where_davenpor
+where_davenpor = 'C:/Users/12Sda/davenpor/';
 MNImask = imgload('MNImask');
 slice = 45;
 mask2D = MNImask(:,:,slice);
@@ -45,7 +45,6 @@ FWHM = 3; resadd = 0; params = ConvFieldParams([FWHM, FWHM], resadd);
 
 niters = 1000;
 
-error('LOLOLOL WTF IS N??? IN line 73,74!, no wonder it didn''t work!')
 for nsubj = [20,50,100]
     rng(mod(FWHM,5) + nsubj)
     orig_pval_store = [];
@@ -56,8 +55,8 @@ for nsubj = [20,50,100]
         orig_tfield = convfield_t( Y, params );
         G_Y = Gaussianize(Y);
         G_tfield = convfield_t( G_Y, params );
-        orig_pval_store = [orig_pval_store, 1 - tcdf(orig_tfield.field(orig_tfield.mask), N-1)'];
-        G_pval_store = [G_pval_store, 1 - tcdf(G_tfield.field(G_tfield.mask), N-1)'];
+        orig_pval_store = [orig_pval_store, 1 - tcdf(orig_tfield.field(orig_tfield.mask), nsubj-1)'];
+        G_pval_store = [G_pval_store, 1 - tcdf(G_tfield.field(G_tfield.mask), nsubj-1)'];
     end
     save([where_davenpor, 'Data/Sim_Data/FWHM',  num2str(FWHM), '_nsubj', num2str(nsubj)],...
         'orig_pval_store', 'G_pval_store')

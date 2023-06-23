@@ -32,7 +32,7 @@ if ~exist( 'niters', 'var' )
     niters = 5000;
 end
 
-D = length(size(mask));
+D = length(size(mask2D));
 
 %%  Main Function Loop
 %--------------------------------------------------------------------------
@@ -43,7 +43,7 @@ for I = 1:length(nsubj_vec)
         params = ConvFieldParams( repmat(FWHM, D), resadd );
         
         % Set the random seed for comparability reasons
-        rng(FWHM + nsubj)
+        rng(FWHM + nsubj,'twister')
         
         if do_gauss == 0
             spfn = @(nsubj) wfield( mask2D, nsubj, field_type, field_params );

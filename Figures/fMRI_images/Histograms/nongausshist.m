@@ -1,7 +1,9 @@
-global ncfloc
+% global ncfloc
+data_loc = 'C:\Users\12SDa\davenpor\Data\RestingStateData\EklundData\';
+ncfloc = 'C:/Users/12Sda/davenpor/davenpor/Toolboxes/ConvolutionFieldsNeuro/';
 set(0,'defaultAxesFontSize', 15); %This sets the default font size. 
 
-a = load('store_standard_field.mat');
+a = load([data_loc, 'store_standard_field.mat']);
 h = histogram(a.standardized_field(:));
 hist_values = h.Values;
 bw = h.BinWidth;
