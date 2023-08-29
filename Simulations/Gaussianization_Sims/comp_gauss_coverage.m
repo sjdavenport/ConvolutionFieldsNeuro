@@ -9,6 +9,8 @@ function comp_gauss_coverage( field_type, field_params, mask2D, nsubj_vec, ...
 %               'S', 'S2', 'N' see wfield for details
 %  field_params: % Only relevant if field_type is 'T' or 'L', default is 3,
 %               see wfield for details
+%  do_gauss: if 0 no transformation, 1 Gaussianization transformation, 2:
+%  the inverse hyperbloic sinh transformation.
 %--------------------------------------------------------------------------
 % OUTPUT
 % Saves two coverage files, one for the original data and one for the
@@ -47,8 +49,10 @@ for I = 1:length(nsubj_vec)
         
         if do_gauss == 0
             spfn = @(nsubj) wfield( mask2D, nsubj, field_type, field_params );
-        else
+        elseif do_gauss == 1
             spfn = @(nsubj) Gaussianize(wfield( mask2D, nsubj, field_type, field_params ));
+        else
+            spfn = @(nsubj) asinh_trans(wfield( mask2D, nsubj, field_type, field_params ));
         end
         coverage = record_coverage( spfn, nsubj, params, niters);
         

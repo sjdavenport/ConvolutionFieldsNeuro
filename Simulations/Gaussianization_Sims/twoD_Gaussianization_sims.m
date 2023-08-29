@@ -1,6 +1,7 @@
 MNImask = imgload('MNImask');
 slice = 45;
 mask2D = MNImask(:,:,slice);
+mask2D = MNImask;
 [ ~, mask2D ] = mask_bounds( mask2D );
 global ncfloc
 
@@ -13,14 +14,15 @@ elseif strcmp(field_type, 'L')
     foldername = 'tfield';
 end
 
-do_gauss = 1;
+do_gauss = 2;
 nsubj_vec = 10;
 FWHM_vec = 5;
 
 saveloc = [ncfloc, 'Simulations/Gaussianization_Sims/Coverage/', foldername];
 
+niters = 10;
 comp_gauss_coverage( field_type, field_params, mask2D, nsubj_vec, ...
-                                        FWHM_vec, do_gauss, saveloc)
+                                        FWHM_vec, do_gauss, saveloc, niters)
 
 %% Test the masking
 MNImask = imgload('MNImask');
