@@ -1,8 +1,8 @@
 MNImask = imgload('MNImask');
 slice = 45;
 mask2D = MNImask(:,:,slice);
-mask2D = MNImask;
 [ ~, mask2D ] = mask_bounds( mask2D );
+mask2D = MNImask(:,:,slice) > 0;
 global ncfloc
 
 field_type = 'L';  %Options are: 'T', 'L', 'S', 'S2', 'N' see wfield for details
@@ -10,19 +10,21 @@ field_params = 3; % Only relevant if field_type is 'T' or 'L'
 
 if strcmp(field_type, 'L')
     foldername = 'Laplacian';
-elseif strcmp(field_type, 'L')
+elseif strcmp(field_type, 'T')
     foldername = 'tfield';
 end
 
-do_gauss = 2;
-nsubj_vec = 10;
+do_gauss = 1;
+nsubj_vec = 50;
 FWHM_vec = 5;
 
 saveloc = [ncfloc, 'Simulations/Gaussianization_Sims/Coverage/', foldername];
 
-niters = 10;
+tic
+niters = 1;
 comp_gauss_coverage( field_type, field_params, mask2D, nsubj_vec, ...
                                         FWHM_vec, do_gauss, saveloc, niters)
+toc
 
 %% Test the masking
 MNImask = imgload('MNImask');
