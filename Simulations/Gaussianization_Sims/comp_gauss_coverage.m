@@ -57,7 +57,7 @@ for I = 1:length(nsubj_vec)
         coverage = record_coverage( spfn, nsubj, params, niters);
         
         save([saveloc, '/FWHM_',...
-            num2str(FWHM), '_nsubj', num2str(nsubj), '_DG_', num2str(do_gauss)],'coverage')
+            num2str(FWHM), '_nsubj', num2str(nsubj), '_DG_', num2str(do_gauss), '_niters_', num2str(niters)],'coverage')
     end
 end
 
