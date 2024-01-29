@@ -1,5 +1,5 @@
 function comp_gauss_coverage( field_type, field_params, mask2D, nsubj_vec, ...
-                        FWHM_vec, do_gauss, saveloc, niters, resadd )
+                        FWHM_vec, do_gauss, saveloc, niters, version, resadd )
 % comp_gauss_coverage computes and saves the coverage on a given mask for
 % the original and Gaussianized datasets.
 %--------------------------------------------------------------------------
@@ -27,6 +27,11 @@ function comp_gauss_coverage( field_type, field_params, mask2D, nsubj_vec, ...
 if ~exist( 'resadd', 'var' )
     % Default value
     resadd = 1;
+end
+
+if ~exist( 'version', 'var' )
+    % Default value
+    version = 1;
 end
 
 if ~exist( 'niters', 'var' )
@@ -57,7 +62,7 @@ for I = 1:length(nsubj_vec)
         coverage = record_coverage( spfn, nsubj, params, niters);
         
         save([saveloc, '/FWHM_',...
-            num2str(FWHM), '_nsubj', num2str(nsubj), '_DG_', num2str(do_gauss), '_niters_', num2str(niters)],'coverage')
+            num2str(FWHM), '_nsubj', num2str(nsubj), '_DG_', num2str(do_gauss), '_niters_', num2str(niters),'_version_', num2str(version)],'coverage')
     end
 end
 
