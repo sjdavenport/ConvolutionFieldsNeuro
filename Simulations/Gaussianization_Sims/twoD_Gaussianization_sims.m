@@ -16,7 +16,7 @@ end
 
 do_gauss = 1;
 nsubj_vec = 50;
-FWHM_vec = 5;
+FWHM_vec = 0;
 
 saveloc = [ncfloc, 'Simulations/Gaussianization_Sims/Coverage/', foldername];
 
