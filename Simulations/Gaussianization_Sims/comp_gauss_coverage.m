@@ -50,7 +50,7 @@ for I = 1:length(nsubj_vec)
         params = ConvFieldParams( repmat(FWHM, D), resadd );
         
         % Set the random seed for comparability reasons
-        rng(FWHM + nsubj,'twister')
+        rng(FWHM + nsubj + 200*version,'twister')
         
         if do_gauss == 0
             spfn = @(nsubj) wfield( mask2D, nsubj, field_type, field_params );
