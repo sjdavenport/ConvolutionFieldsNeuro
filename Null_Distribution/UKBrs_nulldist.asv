@@ -1,0 +1,20 @@
+sumofmasks = imgload([image_loc, 'R2Block_SOM.nii']);
+rs_sum = imgload([image_loc, 'R2Block_fullsum.nii']);
+rs_sqsum = imgload([image_loc, 'R2Block_full_sqsum.nii']);
+rs_power4 = imgload([image_loc, 'R2Block_full_power4.nii']);
+intersection_mask = (sumofmasks == 6968);
+
+rs_var = rs_sqsum/6968 - (rs_sum.^2)/6968^2;
+s
+rs_var_masked = vec_data(rs_var, intersection_mask);
+rs_mean = rs_sum/6968;
+rs_mean_masked = vec_data(rs_mean, intersection_mask);
+
+x_vals = -7:0.01:7;
+marg_dist = zeros(1, length(x_vals));
+
+for I = 1:n
+    im = imgload('I');
+    im_masked = vec_data(im, intersection_mask);
+    im_masked_dm_ds = (im_masked - rs_mean_masked)./
+end
